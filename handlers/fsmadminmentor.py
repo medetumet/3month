@@ -5,6 +5,7 @@ from aiogram.dispatcher.filters.state import State, StatesGroup
 from config import bot
 from keyboards import client_cb
 from config import ADMINS
+from database.bot_db import sql_command_insert
 
 
 class FSMAdmin(StatesGroup):
@@ -75,6 +76,7 @@ async def load_group(message: types.Message, state: FSMContext):
 async def submit(message: types.Message, state: FSMContext):
     if message.text == 'Да':
         # запись в БД
+        await sql_command_insert(state)
         await message.answer('Супер!!')
     else:
         await message.answer('Ну и ладно')
